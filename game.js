@@ -6,7 +6,7 @@
 KEY_CODES = {
   32: 'space',
   37: 'left',
-  38: 'up',
+  38: 'w',
   39: 'right',
   40: 'down',
   70: 'f',
