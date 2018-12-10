@@ -113,7 +113,7 @@ Sprite = function () {
   this.postMove = null;
 
   this.run = function(delta) {
-
+	
     this.move(delta);
     this.updateGrid();
 
@@ -412,6 +412,7 @@ Ship = function () {
       this.bulletCounter -= delta;
     }
     if (KEY_STATUS.space) {
+	
       if (this.bulletCounter <= 0) {
         this.bulletCounter = 10;
         for (var i = 0; i < this.bullets.length; i++) {
@@ -845,8 +846,10 @@ Text = {
 
 SFX = {
   laser:     new Audio('39459__THE_bizniss__laser.wav'),
-  explosion: new Audio('51467__smcameron__missile_explosion.wav')
+  explosion: new Audio('51467__smcameron__missile_explosion.wav'),
+  sw: new Audio('8-Bit Universe - Star Wars Imperial March Theme.mp3')
 };
+//SFX.laser.load();
 
 // preload audio
 for (var sfx in SFX) {
@@ -872,7 +875,6 @@ for (var sfx in SFX) {
 }
 // pre-mute audio
 SFX.muted = false;
-
 Game = {
   score: 0,
   totalAsteroids: 5,
@@ -924,6 +926,7 @@ Game = {
     waiting: function () {
       Text.renderText(window.ipad ? 'Touch Screen to Start' : 'Press Space to Start', 36, Game.canvasWidth/2 - 270, Game.canvasHeight/2);
       if (KEY_STATUS.space || window.gameStart) {
+		  SFX.sw().play();
         KEY_STATUS.space = false; // hack so we don't shoot right away
         window.gameStart = false;
         this.state = 'start';
@@ -1208,9 +1211,14 @@ $(function () {
         paused = !paused;
         if (!paused) {
           // start up again
-          lastFrame = Date.now();
+          SFX.sw().play();
+		  lastFrame = Date.now();
           mainLoop();
         }
+		else
+		{
+			SFX.sw().pause();
+		}
         break;
       case 'm': // mute
         SFX.muted = !SFX.muted;
